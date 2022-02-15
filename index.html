@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work</title>
+    <link rel="stylesheet" href="css/style.css">
+    
+</head>
+<body>
+<div class="container">
+    <select name="nameCourse" class="selectCourse" id="mySelect">
+       
+    </select>
+    <div class="btnContainer">
+        <button onclick="day()">Day</button>
+        <button onclick="week()">Week</button>
+        <button onclick="month()">Month</button>
+        <button onclick="year()">Year</button>
+        <br>
+        <input type="date" class="dateBefore">
+        <input type="date" class="dateAfter">
+        <br>
+    </div>
+    <table class="ttable"></table>
+    
+    <div class="simple"></div>
+ 
+</div>
+<script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+    <script src="JS/main.js"></script>
+</body>
+</html>
