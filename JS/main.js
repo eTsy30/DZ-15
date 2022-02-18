@@ -5,6 +5,8 @@ const objSel = document.getElementById("mySelect");
 const allData = [];
 let arr = [];
 let ID = 0;
+const config = {};
+let myChart;
 
 let objDateCourse = {};
 
@@ -120,15 +122,18 @@ function grafic() {
     ],
   };
   console.log(objDateCourse);
-  const config = {
-    type: "line",
-    data: data,
-    options: {},
-  };
-  // if(myChart)
-  // {
-  //     myChart.destroy();
-  // }
+  Object.assign(
+      config,
+      {
+        type: "line",
+        data: data,
+        options: {},
+      }
+  )
 
-  const myChart = new Chart(document.getElementById("myChart"), config);
+  if (!myChart) {
+    myChart = new Chart(document.getElementById("myChart"), config);
+  } else {
+    myChart.update();
+  }
 }
