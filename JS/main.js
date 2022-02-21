@@ -1,15 +1,29 @@
 const table = document.querySelector(".ttable");
 const selectCourse = document.querySelector(".selectCourse");
 const objSel = document.getElementById("mySelect");
-
+const dateStatr =document.querySelector('.dateBefore')
+const dateEnd =document.querySelector('.dateAfter')
 const allData = [];
 let arr = [];
 let ID = 0;
+let CUR_NAME;
 const config = {};
 let myChart;
-
 let objDateCourse = {};
-
+///////kalendar
+dateStatr.addEventListener('change', input)
+dateEnd.addEventListener('change', input)
+function input() {
+  if(dateStatr.value&&dateEnd.value) {
+    table.innerHTML = "";
+    getCourseFromT(selectCourse.value, dateStatr.value, dateEnd.value)
+  }
+}
+function dateBeforeAfter(start, end) {
+  
+  dateStatr.value=start
+  dateEnd.value=end
+}
 ///////////worker
 if (window.Worker) {
   const worker = new Worker("JS/worker.js");
@@ -22,6 +36,7 @@ if (window.Worker) {
 }
 /////////// worker 2
 function getCourseFromT(id, startDate, endDate) {
+  dateBeforeAfter(startDate,dayjs().format('YYYY-MM-DD'))
   const dateL = [];
   const coursL = [];
   if (window.Worker) {
@@ -31,16 +46,19 @@ function getCourseFromT(id, startDate, endDate) {
         dateL.push(el.Date.slice(0, 10));
         coursL.push(el.Cur_OfficialRate);
         renderTable(el.Date.slice(0, 10), el.Cur_OfficialRate);
+        
       });
     });
     objDateCourse.lCourse = coursL;
     objDateCourse.lDate = dateL;
+
     worker2.postMessage({
       id: id,
       startDate: startDate,
       endDate: endDate,
     });
   }
+
 }
 
 function addAllData(el) {
@@ -57,29 +75,18 @@ function addOptions() {
   });
 }
 
-function renderTable(date, cur_OfficialRate) {
-  const tr = document.createElement("tr");
-  const td1 = document.createElement("td");
-  const td2 = document.createElement("td");
-  tr.append(td1, td2);
-  table.append(tr);
-  td1.innerText = `${date}`;
-  td2.innerText = `${cur_OfficialRate}`;
-}
+
 
 selectCourse.addEventListener("change", () => {
   table.innerHTML = "";
-  arr = allData.filter(
-    (number) => Number(number.Cur_ID) == Number(selectCourse.value)
-  );
-
+  arr = allData.filter((number) => Number(number.Cur_ID) == Number(selectCourse.value));
   arr.forEach((el) => {
     getCourseFromT(
       el.Cur_ID,
       el.Cur_DateStart.slice(0, 10),
-      el.Cur_DateEnd.slice(0, 10)
-    );
+      el.Cur_DateEnd.slice(0, 10) );
     ID = el.Cur_ID;
+    CUR_NAME= el.Cur_Name
   });
 });
 
@@ -87,53 +94,40 @@ selectCourse.addEventListener("change", () => {
 function day() {
   table.innerHTML = "";
   let now = String(dayjs().format("YYYY-MM-DD"));
+  dateBeforeAfter(now, now)
   getCourseFromT(ID, now, now);
+  
+
 }
 function week() {
   table.innerHTML = "";
+
+  
+
   let now = String(dayjs().format("YYYY-MM-DD"));
   let to = String(dayjs().add(-7, "day").format("YYYY-MM-DD"));
+  dateBeforeAfter(to,now)
   getCourseFromT(ID, to, now);
+  grafic()
+  
 }
 function month() {
   table.innerHTML = "";
   let now = String(dayjs().format("YYYY-MM-DD"));
   let to = String(dayjs().add(-1, "month").format("YYYY-MM-DD"));
+  dateBeforeAfter( to,now)
   getCourseFromT(ID, to, now);
 }
 function year() {
   table.innerHTML = "";
   let now = String(dayjs().format("YYYY-MM-DD"));
   let to = String(dayjs().add(-1, "year").format("YYYY-MM-DD"));
+  dateBeforeAfter( to,now)
   getCourseFromT(ID, to, now);
 }
 /////////////////графики
-function grafic() {
-  const labels = objDateCourse.lDate;
-  const data = {
-    labels: labels,
-    datasets: [
-      {
-        // label: 'My First dataset',
-        backgroundColor: "rgb(255, 99, 132)",
-        borderColor: "rgb(255, 99, 132)",
-        data: objDateCourse.lCourse,
-      },
-    ],
-  };
-  console.log(objDateCourse);
-  Object.assign(
-      config,
-      {
-        type: "line",
-        data: data,
-        options: {},
-      }
-  )
-
-  if (!myChart) {
-    myChart = new Chart(document.getElementById("myChart"), config);
-  } else {
-    myChart.update();
-  }
-}
+// const moment= require('moment') 
+// function hoursEarlier(hours) {
+//   return moment().subtract(day, 'd').toDate();
+// };
+// console.log('moment',hoursEarlier(objDateCourse.lDate));

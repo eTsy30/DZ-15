@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "chartjs-adapter-moment": "^1.0.0",
+    "moment": "^2.29.1"
+  },
+  "name": "first",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eTsy30/DZ-15.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eTsy30/DZ-15/issues"
+  },
+  "homepage": "https://github.com/eTsy30/DZ-15#readme",
+  "description": ""
+}

@@ -5,7 +5,7 @@ body{
 }
 .container{
     margin:10px auto;
-    width: 400px;
+    width: 600px;
     
     display: flex;
     flex-direction: column;
@@ -25,4 +25,24 @@ body{
 }
 .dateBefore{
     margin: 10px;
+}
+#myChart{
+    max-height: 350px;
+}
+.ttable  {
+    border-spacing: 3px;
+    border: 1px solid black;
+    border-collapse: collapse;
+
+}
+
+td {padding: 5px;
+    text-align: center;
+    border: 1px solid black;
+    border-spacing: 0px;
+    
+}
+
+th {
+    border: 1px solid black;
 }
