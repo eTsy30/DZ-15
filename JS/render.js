@@ -1,22 +1,11 @@
 const ctx = document.getElementById("myChart").getContext('2d')
 let myChart;
+const deg =6
+const hr=document.querySelector('#hr')
+const mn=document.querySelector('#mn')
+const sc=document.querySelector('#sc')
 
 function renderTable(date) {
-  // const treeparent  = document.querySelector('.tree')
-  // const ditHead = document.createElement('div')
-  // ditHead.className ='table-scroll'
-  // const tableHead = document.createElement('table')
-
-
-
-
-
-
-
-
-
-
-
 
   const thead = document.createElement("thead");
   table.appendChild(thead)
@@ -69,7 +58,7 @@ function grafic(dat) {
   const options = {
     maintainAspectRatio: true,
     hoverRadius: 8,
-    hoverBackgroundColor: 'red',
+    hoverBackgroundColor: '#3498db',
     scales: {
       x: {
         display: true,
@@ -80,14 +69,14 @@ function grafic(dat) {
         title: {
           display: true,
           text: 'Дата',
-          color: '#808080',
+          color: '#3498db',
           font: {
             family: 'Times',
             size: 20,
             weight: 'bold',
             lineHeight: 1.2,
           },
-          padding: { top: 20, left: 0, right: 0, bottom: 0 }
+          padding: { top: 10, left: 0, right: 0, bottom: 0 }
         }
       },
       y: {
@@ -96,7 +85,7 @@ function grafic(dat) {
         title: {
           display: true,
           text: 'Курс',
-          color: '#808080',
+          color: '#3498db',
           font: {
             family: 'Times',
             size: 20,
@@ -124,3 +113,13 @@ function grafic(dat) {
   }
 }
 
+setInterval(()=>{
+  let day = new Date()
+  let hh =day.getHours()*30
+  let mm = day.getMinutes()*deg
+ let ss =day.getSeconds()*deg
+ console.log(hh);
+ hr.style.transform =`rotateZ(${(hh)+(mm/12)}deg)`
+  mn.style.transform =`rotateZ(${mm}deg)`
+ sc.style.transform =`rotateZ(${ss}deg)`
+})

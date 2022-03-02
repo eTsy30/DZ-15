@@ -123,21 +123,20 @@ fetch('https://www.nbrb.by/api/exrates/rates?periodicity=0')
   })
 
   excengeOne.addEventListener('change', excenge)
-  excengeTwo.addEventListener('change', excenge)
+  excengeTwo.addEventListener('change', excenge1)
+  excangeFirstCurse.addEventListener('change', excenge)
+  excangeSecondCurse.addEventListener('change', excenge1)
   function excenge (){
     const selectElementexcangeFirstCurse =  allexcenge.find((number) => Number(number.Cur_ID) === Number(excangeFirstCurse.value))
      const selectElementexcangeSecondCurse = allexcenge.find((number) => Number(number.Cur_ID) === Number(excangeSecondCurse.value))
    console.log(selectElementexcangeFirstCurse);
-   otvet.value =Number(excengeOne.value)*(selectElementexcangeFirstCurse.Cur_OfficialRate/selectElementexcangeFirstCurse.Cur_Scale )/(selectElementexcangeSecondCurse.Cur_OfficialRate/selectElementexcangeSecondCurse.Cur_Scale )
+   excengeTwo.value =(Number(excengeOne.value)*(selectElementexcangeFirstCurse.Cur_OfficialRate/selectElementexcangeFirstCurse.Cur_Scale )/(selectElementexcangeSecondCurse.Cur_OfficialRate/selectElementexcangeSecondCurse.Cur_Scale )).toFixed(2)
 
  }
+ function excenge1 (){
+  const selectElementexcangeFirstCurse =  allexcenge.find((number) => Number(number.Cur_ID) === Number(excangeFirstCurse.value))
+   const selectElementexcangeSecondCurse = allexcenge.find((number) => Number(number.Cur_ID) === Number(excangeSecondCurse.value))
+ console.log(selectElementexcangeFirstCurse);
+ excengeOne.value =(Number(excengeTwo.value)*(selectElementexcangeFirstCurse.Cur_OfficialRate/selectElementexcangeFirstCurse.Cur_Scale )/(selectElementexcangeSecondCurse.Cur_OfficialRate/selectElementexcangeSecondCurse.Cur_Scale )).toFixed(2)
 
-//  const canva = document.querySelector('.texePresentation')
-//  const ctx1 = canva.getContext("2d");
-//  const gradient = ctx1.createLinearGradient(0, 0, 0, 0);
-//  gradient.addColorStop(0.0, 'rgba(0, 0, 255, 1)');
-//  gradient.addColorStop(0.3, 'rgba(128, 0, 255, 0.6)');
-//  gradient.addColorStop(0.6, 'rgba(0, 0, 255, 0.4)');
-//  gradient.addColorStop(1.0, 'rgba(0, 255, 0, 0.2)');
-//  ctx1.fillStyle = gradient;
-//  ctx1.fillText("Fill text", 0, 0);
+}
