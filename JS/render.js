@@ -34,6 +34,7 @@ function renderTable(date) {
 }
 
 function grafic(dat) {
+  console.log('grafic', dataRateValue);
   const dateL = [];
   const coursL = [];
   dat.forEach((el) => {
@@ -64,7 +65,7 @@ function grafic(dat) {
         display: true,
         type: 'time',
         time: {
-          unit: 'month'
+          unit: 'day'
       },
         title: {
           display: true,
@@ -99,6 +100,8 @@ function grafic(dat) {
 
   };
 
+  
+
 
   if (!myChart) {
     myChart = new Chart(document.getElementById("myChart"), {
@@ -118,7 +121,7 @@ setInterval(()=>{
   let hh =day.getHours()*30
   let mm = day.getMinutes()*deg
  let ss =day.getSeconds()*deg
- console.log(hh);
+ 
  hr.style.transform =`rotateZ(${(hh)+(mm/12)}deg)`
   mn.style.transform =`rotateZ(${mm}deg)`
  sc.style.transform =`rotateZ(${ss}deg)`

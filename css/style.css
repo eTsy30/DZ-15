@@ -8,7 +8,7 @@
 html, body{
   margin: 10px;
   height: 100%;
-  overflow: hidden;
+  /* overflow: hidden; */
   background: #e9ecf0;
   text-align: center;
 }
@@ -17,18 +17,18 @@ html, body{
   display: grid;
   height: 100%;
   grid-template-columns: 10vh repeat(2, 1fr) 40vh;
- grid-template-rows: repeat(2, 15%) 1fr;
+ grid-template-rows: 32% 21% 1fr ;
   grid-column-gap: 10px;
   grid-row-gap: 10px;  
   }
   
-  .first { grid-area: 1 / 1 / 6 / 2; }
-  .nav { grid-area: 1 / 2 / 3 / 3; }
-  .excenge { grid-area: 1 / 3 / 3 / 4; }
-  .grapgic { grid-area: 3 / 2 / 5 / 4; }
-  .clockContainer  { grid-area: 1 / 4 / 5 / 5; }
-  .div6 { grid-area: 2 / 4 / 3 / 5; }
-.tree { grid-area: 3 / 4 / 4 / 5; }
+  .first { grid-area: 1 / 1 / 4 / 2; }
+  .nav { grid-area: 1 / 2 / 2 / 3; }
+  .excenge { grid-area: 1 / 3 / 2/ 4; }
+  .grapgic { grid-area: 2 / 2 / 4 / 4; }
+  .clockContainer  { grid-area: 1 / 4 / 2 / 4; }
+  .conponent { grid-area: 2 / 4 / 4 / 4; }
+  .tree { grid-area: 3 / 4 / 4 / 4; }
 .first {
   /* margin: auto;
   padding: 40px ,30px; */
@@ -57,17 +57,22 @@ canvas  {margin: auto;
   height: 95% !important; 
 width: 95%!important;
 
- }
+ }  
  .clockContainer{
   width: 100%;
-  height: 260.19px;
+  
  }
-.tree { margin: auto;
+ .conponent{
+   width: 100%;
+   height: fit-content;
+ }
+.tree { 
+  margin: auto;
   overflow-x: auto;
-  height:100%;
+  height:100%; 
   width: 100%;
 }
-.first,.nav,.tree,.excenge,.clockContainer{
+.first,.nav,.tree,.excenge,.clockContainer,.conponent{
   padding: 20px 30px;
   background: #dde1e7;
   border-radius: 10px;

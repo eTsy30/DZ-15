@@ -7,7 +7,7 @@ const element = document.querySelector('.anim');
 const allData = [];
 let ID = 0;
 let CUR_NAME = null;// нужно для реедера таблицы
-
+let dataRateValue =0;
 ///////kalendar
 dateStatr.addEventListener('change', onChangeInput)
 dateEnd.addEventListener('change', onChangeInput)
@@ -81,7 +81,7 @@ function day() {
   table.innerHTML = "";
   let now = String(dayjs().format("YYYY-MM-DD"));
   getCourseFromT(ID, now, now);
-  // element.classList.toggle("animate__flash");
+  element.classList.toggle("animate__flash");
   element.classList.toggle("animate__flash")
  
 
@@ -90,6 +90,8 @@ function day() {
 
 function chooseDataRate(dataRate) {
   table.innerHTML = "";
+  dataRateValue=dataRate
+  console.log(1,dataRateValue);
   const now = String(dayjs().format("YYYY-MM-DD"));
   const to = String(dayjs().add(-1, dataRate).format("YYYY-MM-DD"));
   getCourseFromT(ID, to, now);
