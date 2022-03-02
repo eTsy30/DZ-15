@@ -34,7 +34,6 @@ function renderTable(date) {
 }
 
 function grafic(dat) {
-  console.log('grafic', dataRateValue);
   const dateL = [];
   const coursL = [];
   dat.forEach((el) => {
