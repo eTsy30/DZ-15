@@ -1,133 +1,143 @@
 const table = document.querySelector(".ttable");
 const selectCourse = document.querySelector(".selectCourse");
 const objSel = document.getElementById("mySelect");
-const dateStatr =document.querySelector('.dateBefore')
-const dateEnd =document.querySelector('.dateAfter')
+const dateStatr = document.querySelector('.dateBefore')
+const dateEnd = document.querySelector('.dateAfter')
+const element = document.querySelector('.anim');
 const allData = [];
-let arr = [];
 let ID = 0;
-let CUR_NAME;
-const config = {};
-let myChart;
-let objDateCourse = {};
+let CUR_NAME = null;// нужно для реедера таблицы
+
 ///////kalendar
-dateStatr.addEventListener('change', input)
-dateEnd.addEventListener('change', input)
-function input() {
-  if(dateStatr.value&&dateEnd.value) {
+dateStatr.addEventListener('change', onChangeInput)
+dateEnd.addEventListener('change', onChangeInput)
+
+function onChangeInput() {
+  if (dateStatr.value && dateEnd.value) {
     table.innerHTML = "";
     getCourseFromT(selectCourse.value, dateStatr.value, dateEnd.value)
   }
 }
-function dateBeforeAfter(start, end) {
-  
-  dateStatr.value=start
-  dateEnd.value=end
+
+function setDatainInput(start, end) {
+  dateStatr.value = start
+  dateEnd.value = end
 }
-///////////worker
-if (window.Worker) {
-  const worker = new Worker("JS/worker.js");
-  worker.addEventListener("message", ({ data }) => {
-    data.forEach((el) => {
-      addAllData(el);
-    });
-    addOptions();
-  });
-}
+
 /////////// worker 2
 function getCourseFromT(id, startDate, endDate) {
-  dateBeforeAfter(startDate,dayjs().format('YYYY-MM-DD'))
-  const dateL = [];
-  const coursL = [];
+  setDatainInput(startDate, dayjs().format('YYYY-MM-DD'))
   if (window.Worker) {
     const worker2 = new Worker("JS/worker2.js");
     worker2.addEventListener("message", ({ data }) => {
-      data.reverse().forEach((el) => {
-        dateL.push(el.Date.slice(0, 10));
-        coursL.push(el.Cur_OfficialRate);
-        renderTable(el.Date.slice(0, 10), el.Cur_OfficialRate);
-        
-      });
+      renderTable(data)
+      grafic(data)
     });
-    objDateCourse.lCourse = coursL;
-    objDateCourse.lDate = dateL;
 
-    worker2.postMessage({
-      id: id,
-      startDate: startDate,
-      endDate: endDate,
-    });
+    worker2.postMessage({ id, startDate, endDate });
   }
-
 }
 
-function addAllData(el) {
-  allData.push({
-    Cur_ID: el.Cur_ID,
-    Cur_Name: el.Cur_Name,
-    Cur_DateStart: el.Cur_DateStart,
-    Cur_DateEnd: el.Cur_DateEnd,
-  });
+function addAllData(data) {
+  data.forEach((el) =>
+    allData.push({
+      Cur_ID: el.Cur_ID,
+      Cur_Name: el.Cur_Name,
+      Cur_DateStart: el.Cur_DateStart,
+      Cur_DateEnd: el.Cur_DateEnd,
+    }))
+  addOptions();
 }
+
 function addOptions() {
+  // const options = allData.reduce((accum, el) => {
+  //   accum.push(new Option(`${el.Cur_Name}`, `${el.Cur_ID}`))
+  //   return accum
+  // }, [])
+
+  // objSel.options = options
+
   allData.forEach((el, i) => {
     objSel.options[i] = new Option(`${el.Cur_Name}`, `${el.Cur_ID}`);
   });
 }
 
 
-
 selectCourse.addEventListener("change", () => {
   table.innerHTML = "";
-  arr = allData.filter((number) => Number(number.Cur_ID) == Number(selectCourse.value));
-  arr.forEach((el) => {
-    getCourseFromT(
-      el.Cur_ID,
-      el.Cur_DateStart.slice(0, 10),
-      el.Cur_DateEnd.slice(0, 10) );
-    ID = el.Cur_ID;
-    CUR_NAME= el.Cur_Name
-  });
+  const selectElement = allData.find((number) => Number(number.Cur_ID) === Number(selectCourse.value))
+
+  getCourseFromT(
+    selectElement.Cur_ID,
+    selectElement.Cur_DateStart.slice(0, 10),
+    selectElement.Cur_DateEnd.slice(0, 10));
+  ID = selectElement.Cur_ID;
+  CUR_NAME = selectElement.Cur_Name
+
 });
 
 //вызовы
 function day() {
   table.innerHTML = "";
   let now = String(dayjs().format("YYYY-MM-DD"));
-  dateBeforeAfter(now, now)
   getCourseFromT(ID, now, now);
-  
+  // element.classList.toggle("animate__flash");
+  element.classList.toggle("animate__flash")
+ 
+
 
 }
-function week() {
-  table.innerHTML = "";
 
-  
+function chooseDataRate(dataRate) {
+  table.innerHTML = "";
+  const now = String(dayjs().format("YYYY-MM-DD"));
+  const to = String(dayjs().add(-1, dataRate).format("YYYY-MM-DD"));
+  getCourseFromT(ID, to, now);
+  element.classList.toggle("animate__flash");
+}
 
-  let now = String(dayjs().format("YYYY-MM-DD"));
-  let to = String(dayjs().add(-7, "day").format("YYYY-MM-DD"));
-  dateBeforeAfter(to,now)
-  getCourseFromT(ID, to, now);
-  grafic()
-  
-}
-function month() {
-  table.innerHTML = "";
-  let now = String(dayjs().format("YYYY-MM-DD"));
-  let to = String(dayjs().add(-1, "month").format("YYYY-MM-DD"));
-  dateBeforeAfter( to,now)
-  getCourseFromT(ID, to, now);
-}
-function year() {
-  table.innerHTML = "";
-  let now = String(dayjs().format("YYYY-MM-DD"));
-  let to = String(dayjs().add(-1, "year").format("YYYY-MM-DD"));
-  dateBeforeAfter( to,now)
-  getCourseFromT(ID, to, now);
-}
-/////////////////графики
-// const moment= require('moment') 
-// function hoursEarlier(hours) {
-//   return moment().subtract(day, 'd').toDate();
-// };
-// console.log('moment',hoursEarlier(objDateCourse.lDate));
+///////////worker
+if (window.Worker) {
+  const worker = new Worker("JS/worker.js");
+  worker.addEventListener("message", ({ data }) => {
+    addAllData(data);
+  });
+};
+//////////////
+const excengeOne = document.querySelector('.excengeOne')
+const excengeTwo = document.querySelector('.excengeTwo')
+const excangeFirstCurse = document.querySelector('.excangeFirstCurse')
+const excangeSecondCurse = document.querySelector('.excangeSecondCurse')
+const otvet = document.querySelector('.otvet')
+let allexcenge = {}
+fetch('https://www.nbrb.by/api/exrates/rates?periodicity=0')
+  .then((response) => response.json())
+  .then((data) => {
+    allexcenge= data
+     console.log('c fetcch',allexcenge);
+    data.forEach((data, i) => {
+      excangeFirstCurse.options[i] = new Option(`${data.Cur_Name}`, `${data.Cur_ID}`);
+      excangeSecondCurse.options[i] = new Option(`${data.Cur_Name}`, `${data.Cur_ID}`);
+      
+    })
+  })
+
+  excengeOne.addEventListener('change', excenge)
+  excengeTwo.addEventListener('change', excenge)
+  function excenge (){
+    const selectElementexcangeFirstCurse =  allexcenge.find((number) => Number(number.Cur_ID) === Number(excangeFirstCurse.value))
+     const selectElementexcangeSecondCurse = allexcenge.find((number) => Number(number.Cur_ID) === Number(excangeSecondCurse.value))
+   console.log(selectElementexcangeFirstCurse);
+   otvet.value =Number(excengeOne.value)*(selectElementexcangeFirstCurse.Cur_OfficialRate/selectElementexcangeFirstCurse.Cur_Scale )/(selectElementexcangeSecondCurse.Cur_OfficialRate/selectElementexcangeSecondCurse.Cur_Scale )
+
+ }
+
+//  const canva = document.querySelector('.texePresentation')
+//  const ctx1 = canva.getContext("2d");
+//  const gradient = ctx1.createLinearGradient(0, 0, 0, 0);
+//  gradient.addColorStop(0.0, 'rgba(0, 0, 255, 1)');
+//  gradient.addColorStop(0.3, 'rgba(128, 0, 255, 0.6)');
+//  gradient.addColorStop(0.6, 'rgba(0, 0, 255, 0.4)');
+//  gradient.addColorStop(1.0, 'rgba(0, 255, 0, 0.2)');
+//  ctx1.fillStyle = gradient;
+//  ctx1.fillText("Fill text", 0, 0);

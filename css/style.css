@@ -1,48 +1,139 @@
-body{
-    background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
-    background-repeat: no-repeat;
-    background-size: cover;
+body {
+  background-image: linear-gradient(
+    to right top,
+    #d16ba5,
+    #c777b9,
+    #ba83ca,
+    #aa8fd8,
+    #9a9ae1,
+    #8aa7ec,
+    #79b3f4,
+    #69bff8,
+    #52cffe,
+    #41dfff,
+    #46eefa,
+    #5ffbf1
+  );
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+   overflow: hidden;
+   justify-items: start; 
+  /* align-items: stretch */
 }
-.container{
-    margin:10px auto;
-    width: 600px;
-    
-    display: flex;
-    flex-direction: column;
-    align-content: space-around;
-    justify-content: center;
-    background: aliceblue;
-   text-align: center;
-    opacity: 50%;
-    border: 3px solid rgb(255, 255, 255);
+.container {
+  height: 100vh;
+  margin: 50px 0 0 0 ;
+  display: grid;
+  grid-template-columns: 5% 70% 1fr;
+  grid-column-gap: 1%;
+  grid-row-gap: 1px;
 }
-.btnContainer{
-    margin: 10px;
-    
+.first {
+  display: grid;
+  height: 100%;
+  font-size: 40px;
+  font-weight: bolder;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  
+  border-radius: 50px;
 }
- .dateAfter{
-    margin: 10px;
+.two {display:grid;
+padding: 30px;
+    align-content: baseline;
+  
 }
-.dateBefore{
-    margin: 10px;
+.tree {
+  height: 1vh;
+  width: 95%;
 }
-#myChart{
-    max-height: 350px;
+.btn {
+  margin: auto;
 }
-.ttable  {
-    border-spacing: 3px;
-    border: 1px solid black;
-    border-collapse: collapse;
+p {background: #121FCF;
+    background: -webkit-linear-gradient(to right, #121FCF 0%, #CF1512 100%);
+    background: -moz-linear-gradient(to right, #121FCF 0%, #CF1512 100%);
+    background: linear-gradient(to right, #121FCF 0%, #CF1512 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  margin: auto;
+}
+div {
+  border: 1px solid #000;
+}
 
+.ttable {
+  height: 100px;
+  overflow-x: auto;
+  margin-top: 0px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  overflow-y: scroll;
 }
-
-td {padding: 5px;
-    text-align: center;
-    border: 1px solid black;
-    border-spacing: 0px;
-    
+td {
+  padding: 5px;
+  text-align: center;
+  border: 1px solid black;
+  border-spacing: 0px;
 }
-
 th {
-    border: 1px solid black;
+  border: 1px solid black;
+}
+#myChart {
+  margin: 10px;
+
+  width: auto;
+}
+button {
+  margin: 15px;
+  width: 50px;
+  height: 50px;
+  background: #f0f0f3;
+  border: none;
+  border-radius: 15px;
+  filter: drop-shadow(-10px -10px 30px #ffffff, 10px 10px 30px #aeaec0 40%);
+}
+.excangeFirstCurse,
+.excengeOne {
+  background-color: #41dfff;
+}
+.selectCourse {
+  background: none;
+  margin: auto;
+  width: 300px;
+  height: 35px;
+  border-radius: 50px;
+  padding: 5px 20px;
+  border: 1px solid #eeeeee;
+  color: #eeeeee;
+  box-shadow: 0 0 3px white;
+}
+.dateBefore,
+.dateAfter {
+
+    background: none;
+    margin: auto;
+    width: 150px;
+    height: 35px;
+    border-radius: 10px;
+    
+    border: 1px solid #eeeeee;
+    color: #eeeeee;
+    /* box-shadow: 0 0 3px white; */
+}
+.dateRate{
+    margin: auto;
+    display: inline;
+}
+button:hover, button:active{
+    background:black;
+    color: wheat;
+    box-shadow: 0 0 10px rgb(221, 36, 36);
+}
+.animation_text {
+  display: inline-block;
+  margin: 0 0.5rem;
+  animation: bounce; 
+  animation-duration: 2s; 
 }

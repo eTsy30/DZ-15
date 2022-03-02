@@ -6,33 +6,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Work</title>
     <link rel="stylesheet" href="css/style.css">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
     
 </head>
-
+<body>
 <div class="container">
+   
+<div class="first"><p class="anim animate__animated"> CURRENCY EXCHANGE</p></div>
+<div class="two"> 
     <select name="nameCourse" class="selectCourse" id="mySelect">
-       
-    </select>
-    <div class="btnContainer">
-        <button onclick="day()">Day</button>
-        <button onclick="week()">Week</button>
-        <button onclick="month()">Month</button>
-        <button onclick="year()">Year</button>
-        <button onclick="grafic()">grafic</button>
-        <br>
-        <input type="date" class="dateBefore">
-        <input type="date" class="dateAfter">
-        <br>
-       
-    <table class="ttable"></table>
+    курс валют
+ </select>
+ 
+<div class="btn">
+   
+    <button onclick="day()">Day</button>
+    <button onclick="chooseDataRate('week')">Week</button>
+     <button onclick="chooseDataRate('month')">Month</button>
+     <button onclick="chooseDataRate('year')">Year</button>
+    </div>
+    <div class="dateRate">
+     <input type="date" class="dateBefore">
+     <input type="date" class="dateAfter">
+    </div>
+     <div class="excenge">
+        <input type="number" class="excengeOne">
+        <input type="number" class="excengeTwo">
+        <input type="text" class="otvet">
+        <select class="excangeFirstCurse" >
+         </select>
+         <select  class="excangeSecondCurse" >
     
+         </select>
+    </div>      
+     <canvas id="myChart" ></canvas>
+    </div>
+
+
+<div class="tree"><div class="excenge">
+    <input type="number" class="excengeOne">
+    <input type="number" class="excengeTwo">
+    <select class="excangeFirstCurse" >
+     </select>
+     <select  class="excangeSecondCurse" >
+
+     </select>
+</div>    
+    <table class="ttable"></table></canvas>
+     </div>
+
     
-</div>
+
 
 </div>
-<div>
-    <canvas id="myChart" ></canvas>
-  </div>
+
+
+        
+     
+   
+  
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
 <script src="JS/render.js"></script>

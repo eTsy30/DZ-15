@@ -1,39 +1,63 @@
 const ctx = document.getElementById("myChart").getContext('2d')
+let myChart;
 
-function renderTable(date, cur_OfficialRate) {
-  console.log(1);
+function renderTable(date) {
+  // const treeparent  = document.querySelector('.tree')
+  // const ditHead = document.createElement('div')
+  // ditHead.className ='table-scroll'
+  // const tableHead = document.createElement('table')
+
+
+
+
+
+
+
+
+
+
+
+
+  const thead = document.createElement("thead");
+  table.appendChild(thead)
+  const tRow = document.createElement('tr')
+  const theadading_1 = document.createElement('th')
+  const theadading_2 = document.createElement('th')
+  const texDay = document.createTextNode("Дата");
+  const texresult = document.createTextNode("Курс");
+  theadading_1.appendChild(texDay)
+  theadading_2.appendChild(texresult)
+  tRow.appendChild(theadading_1)
+  tRow.appendChild(theadading_2)
+  thead.appendChild(tRow)
+  
+  date.reverse().forEach((el) => {
   
   const td1 = document.createElement("td");
   const td2 = document.createElement("td");
   const tr = document.createElement("tr");
-
-//   const th1 = document.createElement("th");
-//   const th2 = document.createElement("th");
-//  const thead = document.createElement('thead')
-//   const tr = document.createElement("tr");
-//   th1.innerText ="Data1"
-//   th2.innerText ="Course"
-//   thead.append(th1, th2);
-//   table.append(thead);
-
   tr.append(td1, td2);
   table.append(tr);
-  td1.innerText = `${date}`;
-  td2.innerText = `${cur_OfficialRate}`;
+  td1.innerText = `${el.Date.slice(0, 10)}`;
+  td2.innerText = `${el.Cur_OfficialRate}`;
 
-
+  })
 }
 
-function grafic() {
- 
+function grafic(dat) {
+  const dateL = [];
+  const coursL = [];
+  dat.forEach((el) => {
+    dateL.push(el.Date.slice(0, 10));
+    coursL.push(el.Cur_OfficialRate);
+  });
 
-  const labels =  objDateCourse.lDate;
   const data = {
-    labels: labels,
+    labels: dateL,
     datasets: [
       {
         label: CUR_NAME,
-        data:   objDateCourse.lCourse,
+        data:   coursL,
         backgroundColor: "rgb(255, 255, 255, 0.3)",
         borderColor: "rgb(255, 99, 132)",
         borderWidth: 1,
@@ -87,20 +111,16 @@ function grafic() {
   };
 
 
-
-
-  Object.assign(
-    config,
-    {
+  if (!myChart) {
+    myChart = new Chart(document.getElementById("myChart"), {
       type: "line",
       data: data,
       options: options
-    }
-  )
-
-  if (!myChart) {
-    myChart = new Chart(document.getElementById("myChart"), config);
+    });
   } else {
+    myChart.options = options
+    myChart.data = data
     myChart.update();
   }
 }
+
