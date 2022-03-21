@@ -4,11 +4,13 @@ const objSel = document.getElementById("mySelect");
 const dateStatr = document.querySelector('.dateBefore')
 const dateEnd = document.querySelector('.dateAfter')
 const element = document.querySelector('.anim');
+const divForGrafic = document.querySelector('.grapgic')
+const chart = document.getElementById("myChart")
 const allData = [];
 let ID = 0;
-let CUR_NAME = null;// нужно для реедера таблицы
+let CUR_NAME = null;
 let dataRateValue = 0;
-///////kalendar
+
 dateStatr.addEventListener('change', onChangeInput)
 dateEnd.addEventListener('change', onChangeInput)
 
@@ -26,7 +28,7 @@ function setDatainInput(start, end) {
   dateStatr.setAttribute('max', end);
   dateEnd.setAttribute('max', end);
   dateEnd.setAttribute('min', start,);
- 
+
 }
 
 /////////// worker 2
@@ -35,12 +37,22 @@ function getCourseFromT(id, startDate, endDate) {
   if (window.Worker) {
     const worker2 = new Worker("JS/worker2.js");
     worker2.addEventListener("message", ({ data }) => {
-      renderTable(data)
-      grafic(data)
-
+      render(data)
+      console.log(data);
     });
     worker2.postMessage({ id, startDate, endDate });
   }
+}
+function render(data) {
+  if (data.length === 0) {
+    clearRender()
+    chart.innerHTML = "<p>Всем привет!</p> Вы прочитали важное сообщение.";
+    return;
+  }
+  renderTable(data)
+  grafic(data)
+
+
 }
 
 function addAllData(data) {
@@ -63,24 +75,27 @@ function addOptions() {
 
 selectCourse.addEventListener("change", () => {
   table.innerHTML = "";
-  const selectElement = allData.find((number) => Number(number.Cur_ID) === Number(selectCourse.value))
+  const selectElement = getElementInfo(Number(selectCourse.value))
   getCourseFromT(
     selectElement.Cur_ID,
     selectElement.Cur_DateStart.slice(0, 10),
     selectElement.Cur_DateEnd.slice(0, 10));
   ID = selectElement.Cur_ID;
   CUR_NAME = selectElement.Cur_Name
+
 }
-
 );
+function getElementInfo(id) {
+  return allData.find((number) => Number(number.Cur_ID) === id)
 
+}
 
 function day() {
   table.innerHTML = "";
   let now = String(dayjs().format("YYYY-MM-DD"));
   getCourseFromT(ID, now, now);
   element.classList.toggle("animate__flash");
-  element.classList.toggle("animate__flash")
+
 }
 
 function chooseDataRate(dataRate) {
@@ -95,6 +110,7 @@ if (window.Worker) {
   const worker = new Worker("JS/worker.js");
   worker.addEventListener("message", ({ data }) => {
     addAllData(data);
+    defaultCourse()
   });
 };
 
@@ -111,6 +127,7 @@ fetch('https://www.nbrb.by/api/exrates/rates?periodicity=0')
     data.forEach((data, i) => {
       excangeFirstCurse.options[i] = new Option(`${data.Cur_Name}`, `${data.Cur_ID}`);
       excangeSecondCurse.options[i] = new Option(`${data.Cur_Name}`, `${data.Cur_ID}`);
+
 
     })
   })
@@ -134,3 +151,13 @@ function excenge1() {
 
 }
 
+
+function defaultCourse() {
+  const id = 431
+  const dateNow = String(dayjs().add(-1, 'year').format("YYYY-MM-DD"))
+  const dateToYear = String(dayjs().format("YYYY-MM-DD"))
+  objSel.value = id
+  const selectElement = getElementInfo(Number(selectCourse.value))
+  CUR_NAME = selectElement.Cur_Name
+  getCourseFromT(id, dateNow, dateToYear)
+}

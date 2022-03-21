@@ -1,86 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CURRENCY EXCHANGE</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+  </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Work</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-
-</head>
-
-<body>
+  <body>
     <div class="container">
+      <div class="first">
+        <p class="anim animate__animated">CURRENCY EXCHANGE</p>
+      </div>
+      <div class="nav">
+        <select name="nameCourse" class="selectCourse" id="mySelect">
+          курс валют
+        </select>
 
-        <div class="first">
-            <p class="anim animate__animated"> CURRENCY EXCHANGE</p>
+        <div class="btn">
+          <button onclick="day()">Day</button>
+          <button onclick="chooseDataRate('week')">Week</button>
+          <button onclick="chooseDataRate('month')">Month</button>
+          <button onclick="chooseDataRate('year')">Year</button>
         </div>
-        <div class="nav">
-            <select name="nameCourse" class="selectCourse" id="mySelect">
-                курс валют
-            </select>
-
-            <div class="btn">
-                <button onclick="day()">Day</button>
-                <button onclick="chooseDataRate('week')">Week</button>
-                <button onclick="chooseDataRate('month')">Month</button>
-                <button onclick="chooseDataRate('year')">Year</button>
-            </div>
-            <div class="dateRate">
-                <input type="date" class="dateBefore">
-                <input type="date" class="dateAfter">
-            </div>
-
+        <div class="dateRate">
+          <input type="date" class="dateBefore" />
+          <input type="date" class="dateAfter" />
         </div>
-       
+      </div>
 
-            <div class="excenge">
-                <input type="number" class="excengeOne">
-                <input type="number" class="excengeTwo">
-                <select class="excangeFirstCurse">
-                </select>
-                <select class="excangeSecondCurse">
-                </select>
-            </div>
-
-    
-
- 
-        <div class="grapgic">
-            <canvas id="myChart"></canvas>
+      <div class="excenge">
+        <div>
+          <input type="number" class="excengeOne" value="100" />
+          <input type="number" class="excengeTwo" />
         </div>
-        <div class="clockContainer">
+        <div>
+          <select class="excangeFirstCurse"></select>
+          <select class="excangeSecondCurse"></select>
+        </div>
+      </div>
+
+      <div class="grapgic">
+        <canvas id="myChart"></canvas>
+      </div>
+      <div class="clockContainer">
         <div class="clock">
-            <div class="hour">
-              <div class="hr" id="hr"></div>
-            </div>
-            <div class="min">
-              <div class="mn" id="mn"></div>
-            </div>
-              <div class="sec">
-                <div class="sc"   id="sc"></div>
-              </div>
+          <div class="hour">
+            <div class="hr" id="hr"></div>
+          </div>
+          <div class="min">
+            <div class="mn" id="mn"></div>
+          </div>
+          <div class="sec">
+            <div class="sc" id="sc"></div>
           </div>
         </div>
-        <div class="conponent">
-          
-    <br>
-            <table is="course-money"></table>
-        </div>
-        <div class="tree">
-            <table class="ttable">
-                
-            </table>
-        </div>
-
+      </div>
+      <div class="conponent">
+        <br />
+        <table is="course-money"></table>
+      </div>
+      <div class="tree">
+        <table class="ttable"></table>
+      </div>
     </div>
-
-
-
-
-
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
@@ -88,10 +76,8 @@
     <script src="JS/render.js"></script>
     <script src="JS/main.js"></script>
 
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js@^3"></script>
     <script src="https://cdn.jsdelivr.net/npm/moment@^2"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@^1"></script>
-</body>
-
+  </body>
 </html>
