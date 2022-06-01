@@ -1,3 +1,0 @@
-webpack 
-для обмена валют нужно
-select-2 (name, id)
