@@ -46,9 +46,10 @@ function getCourseFromT(id, startDate, endDate) {
 function render(data) {
   if (data.length === 0) {
     clearRender()
-    chart.innerHTML = "<p>Всем привет!</p> Вы прочитали важное сообщение.";
+    alert("Данные отсутствуют на севере");
     return;
   }
+
   renderTable(data)
   grafic(data)
 
